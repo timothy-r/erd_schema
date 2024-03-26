@@ -1,4 +1,5 @@
 import logging
+import json
 
 from dependency_injector.wiring import Provide, inject
 from simple_ddl_parser import DDLParser
@@ -17,15 +18,16 @@ CREATE TABLE people
      some_id  INT,
      EMAIL     NVARCHAR(400),
      PRIMARY KEY(ID),
-      INDEX EMAIL_IDX  (EMAIL, ASC) VISIBLE
+    # INDEX  EMAIL_IDX(EMAIL) VISIBLE
   );
 
-  CREATE UNIQUE INDEX EMAIL_IDX_2 ON people (EMAIL, ASC) VISIBLE;
+  -- CREATE UNIQUE INDEX EMAIL_IDX_2 ON people (EMAIL, ASC) VISIBLE;
 
 """
     parse_results = DDLParser(sql, silent=False).run(json_dump=True)
 
-    print(parse_results)
+    parsed = json.loads(parse_results)
+    print(json.dumps(parsed, indent=4))
 
 
 if __name__ == '__main__':
