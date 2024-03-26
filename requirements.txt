@@ -1,0 +1,4 @@
+dependency-injector==4.41.0
+ply==3.11
+simple-ddl-parser==1.0.4
+six==1.16.0
