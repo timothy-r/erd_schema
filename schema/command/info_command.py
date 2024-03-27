@@ -1,4 +1,5 @@
 import logging
+import json
 
 from schema.command.command import Command
 from schema.repository.table_repository import TableRepository
@@ -29,4 +30,4 @@ class InfoCommand(Command):
                     schema=schema_table[0],
                     name=schema_table[1]
                 )
-                print(table)
+                print(json.dumps(table, indent=4))
