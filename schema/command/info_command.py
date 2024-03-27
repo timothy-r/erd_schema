@@ -12,22 +12,17 @@ class InfoCommand(Command):
     def __repr__(self) -> str:
         return f"{__class__.__name__}"
 
-    def execute(self, source:str) -> None:
+    def execute(self) -> None:
         """
-            display parsed info on an input file
+            display parsed table data
         """
-        logging.info(f'Reading {source}')
 
-        with open(source, 'r', encoding='utf-8') as fh:
-            contents = fh.read()
-            self._table_repo.load_from_string(source=contents)
-
-            for schema_table in self._table_repo.get_tables():
-                print(f"Schema: {schema_table[0]}")
-                print(f"Table: {schema_table[1]}")
-                # next print table data
-                table = self._table_repo.get_table(
-                    schema=schema_table[0],
-                    name=schema_table[1]
-                )
-                print(json.dumps(table, indent=4))
+        for schema_table in self._table_repo.get_tables():
+            print(f"Schema: {schema_table[0]}")
+            print(f"Table: {schema_table[1]}")
+            # next print table data
+            table = self._table_repo.get_table(
+                schema=schema_table[0],
+                name=schema_table[1]
+            )
+            print(json.dumps(table, indent=4))

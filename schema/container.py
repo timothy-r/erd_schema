@@ -12,3 +12,7 @@ class Container(containers.DeclarativeContainer):
         InfoCommand,
         table_repo=table_repository
     )
+
+    commands_dict = providers.Dict(
+        info=info_command
+    )

@@ -4,14 +4,33 @@ import sys
 # from dependency_injector.wiring import Provide, inject
 
 from schema.command.command import Command
+from schema.repository.table_repository import TableRepository
 
 from schema.container import Container
 
 # @inject
-def main(command:Command, args:list):
-    logging.info(f'main executing: {command} with: {args[0]}')
+def main(
+    command:Command,
+    table_repo:TableRepository,
+    args:list
+    ):
 
-    command.execute(source=args[0])
+    source = args[0]
+
+    logging.info(f'main executing: {command} with: {source}')
+
+    """
+        1: read source into the table repo
+        2: construct the data model, using the filter (optional)
+        3: execute command on the data model
+    """
+    logging.info(f'Reading {source}')
+
+    with open(source, 'r', encoding='utf-8') as fh:
+        contents = fh.read()
+        table_repo.load_from_string(source=contents)
+
+        command.execute()
 
 if __name__ == '__main__':
 
@@ -30,16 +49,18 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         command_name = sys.argv[1]
     else:
-        command_name = 'info'
+        exit('No command specified')
 
-    # TODO: put this into a dict in the container
-    if command_name == 'info':
-        command = container.info_command()
+    commands_dict = container.commands_dict()
+
+    if command_name in commands_dict:
+        command = commands_dict[command_name]
     else:
         exit(f'Command name not recognised {command_name}')
 
     args = sys.argv[2:]
+
     if len(args) == 0:
         exit('Too few args')
 
-    main(command=command, args=args)
+    main(command=command, table_repo=container.table_repository(), args=args)
