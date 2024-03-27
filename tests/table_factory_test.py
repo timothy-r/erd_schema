@@ -15,6 +15,12 @@ class TableFactoryTest(TestCase):
         result = self._factory.create(data=data)
 
         self.assertIsInstance(result, Table)
+        self.assertEqual('item', result.table_name)
+        self.assertEqual('', result.schema)
+        self.assertEqual(['ID'], result.primary_key)
+
+        cols = result.columns
+        self.assertTrue(2, len(cols))
 
     def _get_test_data(self) -> dict:
 

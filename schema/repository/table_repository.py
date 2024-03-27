@@ -22,7 +22,7 @@ class TableRepository:
         # create table objects for each table using a factory
         self._tables = data['tables']
 
-    def get_table(self, name:str, schema:str = None) -> dict:
+    def get_table(self, name:str, schema:str = "") -> dict:
 
         for table in self._tables:
             if table['table_name'] == name:

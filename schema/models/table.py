@@ -1,20 +1,20 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from schema.models.column import Column
-@dataclass
+@dataclass(frozen=True)
 class Table:
-    name: str
+    table_name: str
     schema: str
     primary_key: list
 
     columns: list[Column]
 
-    alter: dict
-    checks: list
-    index: list
-    partitioned_by: list
-    tablespace: str
-    constraints: dict
+    alter: dict = field(default_factory=dict)
+    checks: list = field(default_factory=list)
+    index: list = field(default_factory=list)
+    partitioned_by: list = field(default_factory=list)
+    tablespace: str = ""
+    constraints: dict = field(default_factory=dict)
 
     # "constraints": {
     #     "references": [
