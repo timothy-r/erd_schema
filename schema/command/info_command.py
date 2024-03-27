@@ -8,6 +8,9 @@ class InfoCommand(Command):
     def __init__(self, table_repo:TableRepository) -> None:
         self._table_repo = table_repo
 
+    def __repr__(self) -> str:
+        return f"{__class__.__name__}"
+
     def execute(self, source:str) -> None:
         """
             display parsed info on an input file
