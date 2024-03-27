@@ -17,6 +17,15 @@ class TableRepositoryTest(TestCase):
 
         self.assertIsInstance(result, dict)
 
+    def test_get_table_for_missing_name(self) -> None:
+        sql = self._get_test_sql()
+
+        self._repo.load_from_string(source=sql)
+
+        result = self._repo.get_table('missing')
+
+        self.assertIsNone(result)
+
     def _get_test_sql(self) -> str:
 
         return """
