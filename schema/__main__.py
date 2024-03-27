@@ -1,33 +1,38 @@
 import logging
 import json
+import sys
 
 from dependency_injector.wiring import Provide, inject
 from simple_ddl_parser import DDLParser
 
+from schema.command.command import Command
+
 from schema.container import Container
 
-@inject
-def main():
-    logging.info('main')
+# @inject
+def main(command:Command, args:list):
+    logging.info(f'main {command} {args}')
 
-    sql = """
-CREATE TABLE people
-  (
-     id       INT,
-     birthday DATETIME DEFAULT GETDATE(),
-     some_id  INT,
-     EMAIL     NVARCHAR(400),
-     PRIMARY KEY(ID),
-    # INDEX  EMAIL_IDX(EMAIL) VISIBLE
-  );
+    command.execute(source=args[0])
 
-  -- CREATE UNIQUE INDEX EMAIL_IDX_2 ON people (EMAIL, ASC) VISIBLE;
+#     sql = """
+# CREATE TABLE people
+#   (
+#      id       INT,
+#      birthday DATETIME DEFAULT GETDATE(),
+#      some_id  INT,
+#      EMAIL     NVARCHAR(400),
+#      PRIMARY KEY(ID),
+#     # INDEX  EMAIL_IDX(EMAIL) VISIBLE
+#   );
 
-"""
-    parse_results = DDLParser(sql, silent=False).run(json_dump=True, group_by_type=True)
+#   -- CREATE UNIQUE INDEX EMAIL_IDX_2 ON people (EMAIL, ASC) VISIBLE;
 
-    parsed = json.loads(parse_results)
-    print(json.dumps(parsed, indent=4))
+# """
+#     parse_results = DDLParser(sql, silent=False).run(json_dump=True, group_by_type=True)
+
+#     parsed = json.loads(parse_results)
+#     print(json.dumps(parsed, indent=4))
 
 
 if __name__ == '__main__':
@@ -43,5 +48,14 @@ if __name__ == '__main__':
         filemode='a',
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
+    if len(sys.argv) > 1:
+        command_name = sys.argv[1]
+    else:
+        command_name = 'info'
 
-    main()
+    if command_name == 'info':
+        command = container.info_command()
+    else:
+        exit()
+
+    main(command, sys.argv[2:])
