@@ -24,7 +24,7 @@ CREATE TABLE people
   -- CREATE UNIQUE INDEX EMAIL_IDX_2 ON people (EMAIL, ASC) VISIBLE;
 
 """
-    parse_results = DDLParser(sql, silent=False).run(json_dump=True)
+    parse_results = DDLParser(sql, silent=False).run(json_dump=True, group_by_type=True)
 
     parsed = json.loads(parse_results)
     print(json.dumps(parsed, indent=4))

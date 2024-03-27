@@ -8,8 +8,9 @@ class TableRepository:
         self._tables = []
 
     def load_from_string(self, source:str) -> bool:
-        self._tables = json.loads(DDLParser(source, silent=False).run(json_dump=True))
+        data = json.loads(DDLParser(source, silent=False).run(json_dump=True, group_by_type=True))
         # create table objects for each table using a factory
+        self._tables = data['tables']
 
     def get_table(self, name:str, schema:str = None) -> dict:
 
