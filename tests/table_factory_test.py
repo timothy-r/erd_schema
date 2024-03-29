@@ -1,16 +1,19 @@
 from unittest import TestCase
 
+from tests.test_fixtures import TestFixtures
+
 from schema.factory.table_factory import TableFactory
 from schema.models.table import Table
-
+from schema.models.column import Column
 class TableFactoryTest(TestCase):
 
     def setUp(self) -> None:
         super().setUp()
         self._factory = TableFactory()
+        self._fixtures = TestFixtures()
 
     def test_get_table(self) -> None:
-        data = self._get_test_data()
+        data = self._fixtures._get_test_table_data()
 
         result = self._factory.create(data=data)
 
@@ -22,40 +25,16 @@ class TableFactoryTest(TestCase):
         cols = result.columns
         self.assertTrue(2, len(cols))
 
-    def _get_test_data(self) -> dict:
+        for key in cols:
+            self.assertIsInstance(cols[key], Column)
 
-        return {
-    "table_name": "item",
-    "schema": "",
-    "primary_key": [
-        "ID"
-    ],
-    "columns": [
-        {
-            "name": "ID",
-            "type": "INT",
-            "size": None,
-            "references": None,
-            "unique": True,
-            "nullable": False,
-            "default": "",
-            "check": ""
-        },
-        {
-            "name": "NAME",
-            "type": "NVARCHAR",
-            "size": 400,
-            "references": "",
-            "unique": False,
-            "nullable": True,
-            "default": "",
-            "check": ""
-        }
-    ],
-    "alter": {},
-    "checks": [],
-    "index": [],
-    "partitioned_by": [],
-    "constraints": {},
-    "tablespace": ""
-}
+        id_col = cols['ID']
+        self.assertEqual('ID', id_col.name)
+        self.assertEqual('INT', id_col.type)
+        self.assertEqual(None, id_col.size)
+        self.assertEqual(None, id_col.references)
+        self.assertEqual(True, id_col.unique)
+        self.assertEqual(False, id_col.nullable)
+        self.assertEqual('', id_col.default)
+        self.assertEqual('', id_col.check)
+

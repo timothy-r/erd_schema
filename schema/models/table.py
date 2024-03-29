@@ -7,7 +7,7 @@ class Table:
     schema: str
     primary_key: list
 
-    columns: list[Column]
+    columns: dict[str, Column]
 
     alter: dict = field(default_factory=dict)
     checks: list = field(default_factory=list)
