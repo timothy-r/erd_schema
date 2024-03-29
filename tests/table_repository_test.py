@@ -1,12 +1,14 @@
 from unittest import TestCase
 
 from schema.repository.table_repository import TableRepository
-
+from schema.factory.table_factory import TableFactory
+from schema.models.table import Table
 class TableRepositoryTest(TestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        self._repo = TableRepository()
+        factory = TableFactory()
+        self._repo = TableRepository(table_factory=factory)
 
     def test_get_table(self) -> None:
         sql = self._get_test_sql()
@@ -15,7 +17,7 @@ class TableRepositoryTest(TestCase):
 
         result = self._repo.get_table('people')
 
-        self.assertIsInstance(result, dict)
+        self.assertIsInstance(result, Table)
 
     def test_get_table_for_missing_name(self) -> None:
         sql = self._get_test_sql()

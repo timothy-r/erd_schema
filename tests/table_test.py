@@ -6,7 +6,7 @@ from schema.factory.table_factory import TableFactory
 from schema.models.table import Table
 from schema.models.column import Column
 
-class TableFactoryTest(TestCase):
+class TableTest(TestCase):
 
     def setUp(self) -> None:
         super().setUp()
