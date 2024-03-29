@@ -6,7 +6,9 @@ from schema.command.command import Command
 from schema.repository.table_repository import TableRepository
 
 class InfoCommand(Command):
-
+    """
+        displays information on the cli about Tables read from an SQL source file
+    """
     def __init__(self, table_repo:TableRepository) -> None:
         self._table_repo = table_repo
 
@@ -17,13 +19,11 @@ class InfoCommand(Command):
         """
             display parsed table data
         """
-        for schema_table in self._table_repo.get_tables():
-            print(f"Schema: {schema_table[0]}")
-            print(f"Table: {schema_table[1]}")
+        for table_name in self._table_repo.get_tables():
+            # print(f"Schema: {schema_table[0]}")
+            print(f"Table: {table_name}")
 
             # next print table data
-            table = self._table_repo.get_table(
-                schema=schema_table[0],
-                name=schema_table[1]
-            )
+            table = self._table_repo.get_table(name=table_name)
+
             print(jsonpickle.encode(table, unpicklable=False, indent=4))

@@ -1,7 +1,7 @@
 
 class TestFixtures:
 
-    def _get_test_table_data(self) -> dict:
+    def get_test_table_data(self) -> dict:
 
         return {
     "table_name": "item",
@@ -39,7 +39,18 @@ class TestFixtures:
     "tablespace": ""
 }
 
-    def _get_test_table_sql(self) -> str:
+    def get_test_table_schema_sql(self) -> str:
+        return """
+        CREATE TABLE public.users
+  (
+     id       INT UNIQUE NOT NULL,
+     EMAIL     NVARCHAR(400),
+     PRIMARY KEY(ID)
+  );
+  """
+
+
+    def get_test_table_sql(self) -> str:
 
         return """
         CREATE TABLE people

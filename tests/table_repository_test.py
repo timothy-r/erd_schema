@@ -13,7 +13,7 @@ class TableRepositoryTest(TestCase):
         self._fixtures = TestFixtures()
 
     def test_get_table(self) -> None:
-        sql = self._fixtures._get_test_table_sql()
+        sql = self._fixtures.get_test_table_sql()
 
         self._repo.load_from_string(source=sql)
 
@@ -21,8 +21,18 @@ class TableRepositoryTest(TestCase):
 
         self.assertIsInstance(result, Table)
 
+    def test_get_table_with_schema(self) -> None:
+        sql = self._fixtures.get_test_table_schema_sql()
+
+        self._repo.load_from_string(source=sql)
+
+        result = self._repo.get_table('public.users')
+
+        self.assertIsInstance(result, Table)
+
+
     def test_get_table_for_missing_name(self) -> None:
-        sql = self._fixtures._get_test_table_sql()
+        sql = self._fixtures.get_test_table_sql()
 
         self._repo.load_from_string(source=sql)
 

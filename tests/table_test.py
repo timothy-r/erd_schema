@@ -15,7 +15,7 @@ class TableTest(TestCase):
 
 
     def test_table_properties_are_immutable(self):
-        data = self._fixtures._get_test_table_data()
+        data = self._fixtures.get_test_table_data()
 
         table:Table = self._factory.create(data=data)
 

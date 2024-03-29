@@ -9,7 +9,7 @@ class TableRepository:
 
     def __init__(self, table_factory:TableFactory) -> None:
         self._factory = table_factory
-        self._tables:list[Table] = []
+        self._tables:dict[str, Table] = {}
 
     def load_from_string(self, source:str) -> bool:
 
@@ -25,20 +25,23 @@ class TableRepository:
         # create table objects for each table using a factory
         for table_data in data['tables']:
             table = self._factory.create(table_data)
-            self._tables.append(table)
+            if table.schema:
+                key = f"{table.schema}.{table.table_name}"
+            else:
+                key = table.table_name
+            self._tables[key] = table
 
-    def get_table(self, name:str, schema:str = "") -> dict:
-
-        for table in self._tables:
-            # logging.info(table)
-
-            if table.table_name == name:
-                return table
-
-    def get_tables(self) -> list[(str, str)]:
+    def get_table(self, name:str) -> dict:
         """
-            return a list of tuples of (schema_name, table_name)
+            name is schema.name of the table, if schema is specified
         """
-        return [
-            (table.schema, table.table_name) for table in self._tables
-        ]
+        if name in self._tables:
+            return self._tables[name]
+
+        return None
+
+    def get_tables(self) -> list[str]:
+        """
+            return a list of "schema_name.table_name"
+        """
+        return self._tables.keys()

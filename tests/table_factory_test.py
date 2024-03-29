@@ -13,7 +13,7 @@ class TableFactoryTest(TestCase):
         self._fixtures = TestFixtures()
 
     def test_get_table(self) -> None:
-        data = self._fixtures._get_test_table_data()
+        data = self._fixtures.get_test_table_data()
 
         result = self._factory.create(data=data)
 
