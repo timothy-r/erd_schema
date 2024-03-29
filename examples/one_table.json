@@ -1,0 +1,56 @@
+[
+    {
+        "table_name": "people",
+        "schema": null,
+        "primary_key": [
+            "ID"
+        ],
+        "columns": [
+            {
+                "name": "id",
+                "type": "INT",
+                "size": null,
+                "references": null,
+                "unique": false,
+                "nullable": true,
+                "default": null,
+                "check": null
+            },
+            {
+                "name": "birthday",
+                "type": "DATETIME",
+                "size": null,
+                "references": null,
+                "unique": false,
+                "nullable": true,
+                "default": "GETDATE()",
+                "check": null
+            },
+            {
+                "name": "some_id",
+                "type": "INT",
+                "size": null,
+                "references": null,
+                "unique": false,
+                "nullable": true,
+                "default": null,
+                "check": null
+            },
+            {
+                "name": "EMAIL",
+                "type": "NVARCHAR",
+                "size": 400,
+                "references": null,
+                "unique": false,
+                "nullable": true,
+                "default": null,
+                "check": null
+            }
+        ],
+        "alter": {},
+        "checks": [],
+        "index": [],
+        "partitioned_by": [],
+        "tablespace": null
+    }
+]

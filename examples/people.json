@@ -1,0 +1,59 @@
+{
+    "table_name": "people",
+    "schema": null,
+    "primary_key": [
+        "ID"
+    ],
+    "columns": [
+        {
+            "name": "id",
+            "type": "INT",
+            "size": null,
+            "references": null,
+            "unique": true,
+            "nullable": false,
+            "default": null,
+            "check": null
+        },
+        {
+            "name": "EMAIL",
+            "type": "NVARCHAR",
+            "size": 400,
+            "references": null,
+            "unique": false,
+            "nullable": true,
+            "default": null,
+            "check": null
+        },
+        {
+            "name": "FAMILY_ID",
+            "type": "INT",
+            "size": null,
+            "references": null,
+            "unique": false,
+            "nullable": true,
+            "default": null,
+            "check": null
+        }
+    ],
+    "alter": {
+        "columns": [
+            {
+                "name": "FAMILY_ID",
+                "constraint_name": null,
+                "references": {
+                    "table": "FAMILY",
+                    "schema": null,
+                    "on_delete": null,
+                    "on_update": null,
+                    "deferrable_initially": null,
+                    "column": "ID"
+                }
+            }
+        ]
+    },
+    "checks": [],
+    "index": [],
+    "partitioned_by": [],
+    "tablespace": null
+}

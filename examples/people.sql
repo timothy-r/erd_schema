@@ -1,0 +1,11 @@
+CREATE TABLE people
+(
+    id       INT,
+    birthday DATETIME DEFAULT GETDATE(),
+    some_id  INT,
+    EMAIL     NVARCHAR(400),
+    PRIMARY KEY(ID),
+    INDEX  EMAIL_IDX(EMAIL)
+);
+
+ -- CREATE UNIQUE INDEX EMAIL_IDX_2 ON people (EMAIL, ASC) VISIBLE;

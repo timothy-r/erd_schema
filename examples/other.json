@@ -1,0 +1,57 @@
+{
+    "table_name": "car",
+    "schema": "None",
+    "primary_key": ["id"],
+    "columns": [
+    {
+        "name": "id",
+        "type": "INT",
+        "size": "None",
+        "references": "None",
+        "unique": "False",
+        "nullable": "False",
+        "default": "None",
+        "check": "None"
+    },
+    {
+        "name": "NAME",
+        "type": "NVARCHAR",
+        "size": 400,
+        "references": "None",
+        "unique": "False",
+        "nullable": "True",
+         "default": "None",
+         "check": "None"
+    },
+    {
+        "name": "OWNER_ID",
+        "type": "INT",
+        "size": "None",
+        "references": "None",
+        "unique": "False",
+        "nullable": "True",
+        "default": "None",
+        "check": "None"
+    }
+    ],
+    "alter": {},
+    "checks": [],
+    "index": [],
+    "partitioned_by": [],
+    "constraints":
+    {
+        "references": [
+            {
+                "table": "people",
+                "columns": ["ID"],
+                "schema": "None",
+                "on_delete": "None",
+                "on_update": "None",
+                "deferrable_initially": "None",
+                "name": "OWNER_ID",
+                "constraint_name": "fk_category"
+            }
+        ]
+    },
+    "tablespace": "None"
+}
