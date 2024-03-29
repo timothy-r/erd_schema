@@ -1,5 +1,6 @@
 dependency-injector==4.41.0
 jsonpickle==3.0.3
+networkx==3.2.1
 ply==3.11
 simple-ddl-parser==1.0.4
 six==1.16.0
