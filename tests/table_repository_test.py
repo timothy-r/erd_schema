@@ -4,6 +4,7 @@ from tests.test_fixtures import TestFixtures
 from schema.repository.table_repository import TableRepository
 from schema.factory.table_factory import TableFactory
 from schema.models.table import Table
+
 class TableRepositoryTest(TestCase):
 
     def setUp(self) -> None:

@@ -40,7 +40,7 @@ class TableRepository:
 
         return None
 
-    def get_tables(self) -> list[str]:
+    def get_table_names(self) -> list[str]:
         """
             return a list of "schema_name.table_name"
         """

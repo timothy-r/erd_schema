@@ -19,7 +19,7 @@ class InfoCommand(Command):
         """
             display parsed table data
         """
-        for table_name in self._table_repo.get_tables():
+        for table_name in self._table_repo.get_table_names():
             # print(f"Schema: {schema_table[0]}")
             print(f"Table: {table_name}")
 

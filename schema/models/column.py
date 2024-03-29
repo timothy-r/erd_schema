@@ -6,11 +6,11 @@ class Column:
     type: str
 
     # part of type
-    size: int
+    size: int = None
     # when is this set?
     # when there's an explicit references statement for the col?
-    references: str
-    unique: bool
-    nullable: bool
-    default: str
-    check: str
+    references: str = ''
+    unique: bool = False
+    nullable: bool = True
+    default: str = ''
+    check: str = ''
