@@ -1,11 +1,11 @@
 
 class TestFixtures:
 
-    def get_test_table_data(self) -> dict:
+    def get_test_table_data(self, name:str="item", schema:str="public") -> dict:
 
         return {
-    "table_name": "item",
-    "schema": "client_a",
+    "table_name": name,
+    "schema": schema,
     "primary_key": [
         "ID"
     ],
@@ -29,6 +29,16 @@ class TestFixtures:
             "nullable": True,
             "default": "",
             "check": ""
+        },
+        {
+            "name": "GROUP_ID",
+            "type": "INT",
+            "size": None,
+            "references": "",
+            "unique": False,
+            "nullable": True,
+            "default": "",
+            "check": ""
         }
     ],
     "alter": {},
@@ -38,6 +48,44 @@ class TestFixtures:
     "constraints": {},
     "tablespace": ""
 }
+
+    def get_test_table_data_with_relations(self, name:str="item", schema:str="public") -> dict:
+
+        table_data = self.get_test_table_data()
+        # table_data["constraints"] =  {
+        #     "references": [
+        #     {
+        #         "table": "group",
+        #         "columns": [
+        #             "ID"
+        #         ],
+        #         "schema": "public",
+        #         "on_delete": None,
+        #         "on_update": None,
+        #         "deferrable_initially": None,
+        #         "name": "GROUP_ID",
+        #         "constraint_name": "FK_group"
+        #     }
+        #     ]
+        # }
+
+        table_data["alter"] =  {
+            "columns": [
+                {
+                "name": "group_id",
+                "constraint_name": "FK_group",
+                "references": {
+                    "table": "group",
+                    "schema": "public",
+                    "on_delete": None,
+                    "on_update": None,
+                    "deferrable_initially": None,
+                    "column": "id"
+                    }
+                }
+            ]
+        }
+        return table_data
 
     def get_test_table_schema_sql(self) -> str:
         return """

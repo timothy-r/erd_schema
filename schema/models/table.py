@@ -55,7 +55,7 @@ class Table:
     #         ]
     # }
 
-    def get_references(self):
+    def get_relations(self) -> list[Relation]:
         """
             get the table_names and columns of this table that reference another table
             {"from": "this.table.column_name", "to":"other.table.full_name" }
@@ -87,7 +87,7 @@ class Table:
         return relations
 
 
-    def references(self, table_name: str) -> bool:
+    def has_relation(self, table_name: str) -> bool:
         """
             table name format is "schema"."table"
             return True if this table has a reference to the parameter table + schema

@@ -28,7 +28,7 @@ class GraphBuilder:
         for node in g.nodes().data():
             # table_name = node[0]
             table:Table = node[1]['attr']['table']
-            references = table.get_references()
+            references = table.get_relations()
             # references are fks to other table - is the relationship one to many or one to one?
 
         return g

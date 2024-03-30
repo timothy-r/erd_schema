@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 class RelationType(Enum):
-    ZERO = 0
+    # ZERO = 0
     ONE = 1
     MANY = 2
 
