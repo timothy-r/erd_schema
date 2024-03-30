@@ -56,7 +56,7 @@ class TableTest(TestCase):
         expected_to_col = 'id'
         expected_to_type = RelationType.ONE
 
-        relations = table.get_relations()
+        relations:tuple = table.get_relations()
 
         self.assertTrue(expected_relation_count == len(relations))
         relation:Relation = relations[0]
@@ -68,3 +68,12 @@ class TableTest(TestCase):
         self.assertEqual(expected_to_table, relation.to_table)
         self.assertEqual(expected_to_col, relation.to_col)
         self.assertEqual(expected_to_type, relation.to_type)
+
+    def test_has_relation(self) -> None:
+        data = self._fixtures.get_test_table_data_with_relations()
+
+        table:Table = self._factory.create(data=data)
+
+        self.assertTrue(table.has_relation('public.group'))
+        self.assertFalse(table.has_relation('public.missing'))
+        self.assertFalse(table.has_relation('group'))

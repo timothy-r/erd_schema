@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+import functools
 
 from schema.models.column import Column
 from schema.models.relation import Relation, RelationType
@@ -18,7 +19,7 @@ class Table:
     tablespace: str = ""
     constraints: dict = field(default_factory=dict)
 
-    @property
+    @functools.cached_property
     def full_name(self):
         return self._table_full_name(table_name=self.table_name, schema=self.schema)
 
@@ -55,10 +56,10 @@ class Table:
     #         ]
     # }
 
-    def get_relations(self) -> list[Relation]:
+    # @functools.cache
+    def get_relations(self) -> tuple:
         """
             get the table_names and columns of this table that reference another table
-            {"from": "this.table.column_name", "to":"other.table.full_name" }
         """
         relations = []
 
@@ -72,27 +73,35 @@ class Table:
                     )
                     other_col_name = col["references"]["column"]
                     this_col_name = col["name"]
-                    relations.append(
-                        Relation(
-                            from_table=self.full_name,
-                            from_col=this_col_name,
-                            to_table=other_table_name,
-                            to_col=other_col_name,
-                            # types depend on column nullability
-                            from_type=RelationType.MANY,
-                            to_type=RelationType.ONE
+                    name = col['constraint_name']
+
+                    relations.append(Relation(
+                        name=name,
+                        from_table=self.full_name,
+                        from_col=this_col_name,
+                        to_table=other_table_name,
+                        to_col=other_col_name,
+                        # types depend on column nullability
+                        from_type=RelationType.MANY,
+                        to_type=RelationType.ONE
                         )
                     )
 
-        return relations
+
+        return tuple(relations)
 
 
+    # @functools.cache
     def has_relation(self, table_name: str) -> bool:
         """
             table name format is "schema"."table"
             return True if this table has a reference to the parameter table + schema
         """
-        pass
+        for relation in self.get_relations():
+            if relation.to_table == table_name:
+                return True
+
+        return False
 
     def _table_full_name(self, table_name:str, schema:str) -> str:
         if not schema:

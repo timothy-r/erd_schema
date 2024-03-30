@@ -13,7 +13,7 @@ class RelationType(Enum):
 
 @dataclass(frozen=True)
 class Relation:
-
+    name:str
     from_table: str
     from_col: str
     to_table: str
