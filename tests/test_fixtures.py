@@ -5,7 +5,7 @@ class TestFixtures:
 
         return {
     "table_name": "item",
-    "schema": "",
+    "schema": "client_a",
     "primary_key": [
         "ID"
     ],

@@ -25,11 +25,7 @@ class TableRepository:
         # create table objects for each table using a factory
         for table_data in data['tables']:
             table = self._factory.create(table_data)
-            if table.schema:
-                key = f"{table.schema}.{table.table_name}"
-            else:
-                key = table.table_name
-            self._tables[key] = table
+            self._tables[table.full_name] = table
 
     def get_table(self, name:str) -> dict:
         """

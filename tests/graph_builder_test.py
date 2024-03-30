@@ -16,7 +16,7 @@ def mocked_repo_get_table_names() -> Table:
 
 
 def mocked_repo_get_table(name:str) -> Table:
-    if name == 'user':
+    if name == 'public.user':
         cols = {
             'id': Column(
                 name='id',
@@ -37,7 +37,7 @@ def mocked_repo_get_table(name:str) -> Table:
         }
         alter = {
             "columns": [
-            {
+                {
                 "name": "group_id",
                 "constraint_name": None,
                 "references": {
@@ -47,9 +47,9 @@ def mocked_repo_get_table(name:str) -> Table:
                     "on_update": None,
                     "deferrable_initially": None,
                     "column": "id"
+                    }
                 }
-            }
-        ]
+            ]
         }
 
         return Table(
@@ -59,7 +59,7 @@ def mocked_repo_get_table(name:str) -> Table:
             columns=cols,
             alter=alter
         )
-    elif name == 'group':
+    elif name == 'public.group':
         cols = {
             'id': Column(
                 name='id',
@@ -76,7 +76,7 @@ def mocked_repo_get_table(name:str) -> Table:
             primary_key=['id'],
             columns=cols
         )
-    elif name == 'address':
+    elif name == 'public.address':
         cols = {
             'id': Column(
                 name='id',
@@ -113,8 +113,16 @@ class GraphBuilderTest(TestCase):
         self._mock_repo.get_table = mocked_repo_get_table
 
         g = self._builder.build(filter=None)
-        self.assertEqual(3, len(g.nodes))
-        # self.assertTrue('user' in g)
+
+        print(list(g.nodes))
+
+        self.assertEqual(3, g.number_of_nodes())
+        table_names = mocked_repo_get_table_names()
+
+        for n in g.nodes().data():
+            # print(n)
+            self.assertTrue(n[0] in table_names)
+            self.assertIsInstance(n[1]['attr']['table'], Table)
 
         # print(g)
 

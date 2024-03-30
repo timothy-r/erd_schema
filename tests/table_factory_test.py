@@ -18,8 +18,8 @@ class TableFactoryTest(TestCase):
         result = self._factory.create(data=data)
 
         self.assertIsInstance(result, Table)
-        self.assertEqual('item', result.table_name)
-        self.assertEqual('', result.schema)
+        self.assertEqual(data['table_name'], result.table_name)
+        self.assertEqual(data['schema'], result.schema)
         self.assertEqual(['ID'], result.primary_key)
 
         cols = result.columns
