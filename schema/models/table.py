@@ -94,7 +94,7 @@ class Table:
     # @functools.cache
     def has_relation(self, table_name: str) -> bool:
         """
-            table name format is "schema"."table"
+            table_name format is "schema"."table"
             return True if this table has a reference to the parameter table + schema
         """
         for relation in self.get_relations():

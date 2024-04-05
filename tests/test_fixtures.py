@@ -51,7 +51,7 @@ class TestFixtures:
 
     def get_test_table_data_with_relations(self, name:str="item", schema:str="public") -> dict:
 
-        table_data = self.get_test_table_data()
+        table_data = self.get_test_table_data(name=name, schema=schema)
         # table_data["constraints"] =  {
         #     "references": [
         #     {

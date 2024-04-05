@@ -14,8 +14,14 @@ class RelationType(Enum):
 @dataclass(frozen=True)
 class Relation:
     name:str
+    """
+        from_table has the fk column
+    """
     from_table: str
     from_col: str
+    """
+        to_table is the table referenced
+    """
     to_table: str
     to_col: str
 
