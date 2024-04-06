@@ -49,7 +49,7 @@ class TestFixtures:
     "tablespace": ""
 }
 
-    def get_test_table_data_with_relations(self, name:str="item", schema:str="public") -> dict:
+    def get_test_table_data_with_alter_relations(self, name:str="item", schema:str="public") -> dict:
 
         table_data = self.get_test_table_data(name=name, schema=schema)
         # table_data["constraints"] =  {
@@ -85,6 +85,44 @@ class TestFixtures:
                 }
             ]
         }
+        return table_data
+
+    def get_test_table_data_with_constraint_relations(self, name:str="item", schema:str="public") -> dict:
+
+        table_data = self.get_test_table_data(name=name, schema=schema)
+        table_data["constraints"] =  {
+            "references": [
+            {
+                "table": "group",
+                "columns": [
+                    "id"
+                ],
+                "schema": "public",
+                "on_delete": None,
+                "on_update": None,
+                "deferrable_initially": None,
+                "name": "group_id",
+                "constraint_name": "FK_group"
+            }
+            ]
+        }
+
+        # table_data["alter"] =  {
+        #     "columns": [
+        #         {
+        #         "name": "group_id",
+        #         "constraint_name": "FK_group",
+        #         "references": {
+        #             "table": "group",
+        #             "schema": "public",
+        #             "on_delete": None,
+        #             "on_update": None,
+        #             "deferrable_initially": None,
+        #             "column": "id"
+        #             }
+        #         }
+        #     ]
+        # }
         return table_data
 
     def get_test_table_schema_sql(self) -> str:
