@@ -1,18 +1,19 @@
 import logging
 import sys
 
-# from dependency_injector.wiring import Provide, inject
+from dependency_injector.wiring import Provide, inject
 
 from schema.command.command import Command
 from schema.repository.table_repository import TableRepository
 
 from schema.container import Container
 
-# @inject
+@inject
 def main(
     command:Command,
-    table_repo:TableRepository,
-    args:list
+    args:list,
+    table_repo:TableRepository = Provide[Container.table_repository],
+    graph_builder = Provide[Container.graph_builder]
     ):
 
     source = args[0]
@@ -30,6 +31,9 @@ def main(
         contents = fh.read()
         table_repo.load_from_string(source=contents)
 
+        filter = None
+        graph = graph_builder.build(filter=filter)
+
         command.execute()
 
 if __name__ == '__main__':
@@ -41,8 +45,8 @@ if __name__ == '__main__':
     # TODO: configure the logging
     logging.basicConfig(
         level=logging.DEBUG,
-        filename='erd_schema.log',
-        filemode='w',
+        # filename='erd_schema.log',
+        # filemode='w',
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
 
@@ -63,4 +67,8 @@ if __name__ == '__main__':
     if len(args) == 0:
         exit('Too few args')
 
-    main(command=command, table_repo=container.table_repository(), args=args)
+    main(
+        command=command,
+        # table_repo=container.table_repository(),
+        args=args
+    )

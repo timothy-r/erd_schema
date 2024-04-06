@@ -11,6 +11,9 @@ class RelationType(Enum):
     ONE_OR_MANY = 5
     ONE_AND_ONLY_ONE = 6
 
+    def __repr__(self) -> str:
+        return f"RelationType({self.name})"
+
 @dataclass(frozen=True)
 class Relation:
     name:str

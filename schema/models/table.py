@@ -57,7 +57,7 @@ class Table:
     # }
 
     # @functools.cache
-    def get_relations(self) -> tuple:
+    def get_relations(self) -> tuple[Relation]:
         """
             get the table_names and columns of this table that reference another table
         """
@@ -86,7 +86,28 @@ class Table:
                         to_type=RelationType.ONE
                         )
                     )
+        if "references" in self.constraints:
+            for col in self.constraints["references"]:
+                other_table_name = self._table_full_name(
+                        table_name=col['table'],
+                        schema=col["schema"]
+                    )
+                # only supports single column
+                other_col_name = col["columns"][0]
+                this_col_name = col["name"]
+                name = col['constraint_name']
 
+                relations.append(Relation(
+                        name=name,
+                        from_table=self.full_name,
+                        from_col=this_col_name,
+                        to_table=other_table_name,
+                        to_col=other_col_name,
+                        # types depend on column nullability
+                        from_type=RelationType.MANY,
+                        to_type=RelationType.ONE
+                        )
+                    )
 
         return tuple(relations)
 
